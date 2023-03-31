@@ -37,12 +37,13 @@
 	</section>
 	<section id="portfolio">
 		<h2>Mes Projets</h2>
-		<ul class="filtreUl">
-			<li class="filtreLi">Tous</li>
-			<li class="filtreLi">Objets</li>
-			<li class="filtreLi">Appartments</li>
-			<li class="filtreLi">Hôtels & restaurants</li>
-		</ul>
+		<div class="filter-buttons">
+			<!-- à écrire en javascript en faisant un fetch /categories-->
+			<button class="filter-btn active" data-filter="all">Tous</button>
+			<button class="filter-btn" data-filter="1">Objets</button>
+			<button class="filter-btn" data-filter="2">Appartements</button>
+			<button class="filter-btn" data-filter="3">Hôtels & Restaurants</button>
+		  </div>
 		<div class="gallery">
 			<!--<figure>
 				<img src="assets/images/abajour-tahina.png" alt="Abajour Tahina">
