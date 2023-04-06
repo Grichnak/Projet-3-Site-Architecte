@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 figure.appendChild(image); /* Attache l'élément img à l'élément figure*/
                 figure.appendChild(title); /* Attache l'élément figcaption à l'élément figure*/
                 document.querySelector('.gallery').appendChild(figure); /*Attache l'élément figure à l'élément .gallery du html*/
-                
+
             }
             );
         }
@@ -30,16 +30,16 @@ document.addEventListener('DOMContentLoaded', () => { // vérifie si la page est
             const objectsButton = document.querySelector('.filter-btn[data-filter="objets"]'); // Même chose pour Objets
             const apartmentsButton = document.querySelector('.filter-btn[data-filter="appartements"]'); // Pareil pour Appartements
             const hotelsRestaurantsButton = document.querySelector('.filter-btn[data-filter="hotels-restaurants"]'); // Idem Restaurants & hôtels
-            //let activeFilter = 'all'; // Le filtre actif par défaut est "Tous"
-            
+
+
             const filterProjects = (event) => { //Filtre les projets en fonction du filtre choisi
-                
+
                 gallery.innerHTML = ''; // Vide la galerie afin de pouvoir la remplir avec les éléments filtrés
-                
+
                 let filterSelected = event.target.dataset.filter;
                 projects.forEach(project => {// on crée une boucle  
                     if (project.categoryId == filterSelected || filterSelected == "all") { // on vérifie si le projet doit être affiché en fonction du filtre choisi
-                        
+
                         const figure = document.createElement('figure'); // on crée un élément figure pour chaque objet
                         const image = document.createElement('img'); // même chose avec img
                         image.setAttribute('src', project.imageUrl); // on attribue l'url de l'image à l'élément img
@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => { // vérifie si la page est
             // pour chaque bouton récupéré
             btnsCategory.forEach(btnCategory => {
 
-               
+
                 // on clique sur une catégorie
                 btnCategory.addEventListener('click', event => {
 
@@ -71,52 +71,68 @@ document.addEventListener('DOMContentLoaded', () => { // vérifie si la page est
                     event.target.classList.add("active");
                     // on exécute le code
                     filterProjects(event); // on affiche les projets correspondant au filtre actif
-                    
+
                 });
 
             });
-            
-           /* allButton.addEventListener('click', () => { // on met un event listener pour l'évenement click sur le bouton Tous
-                activeFilter = 'all'; // le filtre actif est le filtre Tous
-                filterProjects(); // on affiche les projets correspondant au filtre actif
-                allButton.classList.add('active'); // le bouton Tous reçoit la classe 'active' 
-                objectsButton.classList.remove('active'); // on enlève la classe 'active' du bouton objets
-                apartmentsButton.classList.remove('active'); // on enlève la classe 'active' du bouton appartments
-                hotelsRestaurantsButton.classList.remove('active'); // on enlève la classe 'active' du bouton hôtels et restaurants
+
+
+        });
+});
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    fetch('http://localhost:5678/api/categories')
+        .then(resp => resp.json())
+        .then(categories => {
+            const filterButtons = document.querySelector('.filter-buttons');
+            const gallery = document.querySelector('.gallery');
+
+            // Ajoute un bouton de filtre pour chaque catégorie
+            categories.forEach(category => {
+                const button = document.createElement('button');
+                button.classList.add('filter-btn');
+                button.dataset.filter = category.id;
+                button.textContent = category.name;
+                filterButtons.appendChild(button);
             });
 
-            //même chose pour le bouton Objets
-            objectsButton.addEventListener('click', () => { 
-                activeFilter = 'objets';
-                filterProjects();
-                allButton.classList.remove('active');
-                objectsButton.classList.add('active');
-                apartmentsButton.classList.remove('active');
-                hotelsRestaurantsButton.classList.remove('active');
+            // Ajoute un bouton "Tous" pour afficher tous les projets
+            const allButton = document.createElement('button');
+            allButton.classList.add('filter-btn', 'active');
+            allButton.dataset.filter = 'all';
+            allButton.textContent = 'Tous';
+            filterButtons.prepend(allButton);
+
+            // Fonction qui filtre les projets selon la catégorie sélectionnée
+            const filterProjects = (event) => {
+                gallery.innerHTML = '';
+                const filterSelected = event.target.dataset.filter;
+                projects.forEach(project => {
+                    if (project.categoryId == filterSelected || filterSelected == 'all') {
+                        const figure = document.createElement('figure');
+                        const image = document.createElement('img');
+                        image.setAttribute('src', project.imageUrl);
+                        image.setAttribute('alt', project.title);
+                        const title = document.createElement('figcaption');
+                        title.innerHTML = project.title;
+                        figure.appendChild(image);
+                        figure.appendChild(title);
+                        gallery.appendChild(figure);
+                    }
+                });
+            };
+
+            // Sélectionne tous les boutons de filtre et ajoute un écouteur d'événement sur chacun
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            filterBtns.forEach(filterBtn => {
+                filterBtn.addEventListener('click', event => {
+                    // Enlève la classe "active" du bouton de filtre actif et ajoute-la au bouton sélectionné
+                    document.querySelector('.filter-btn.active').classList.remove('active');
+                    event.target.classList.add('active');
+                    // Filtre les projets selon la catégorie sélectionnée
+                    filterProjects(event);
+                });
             });
-            
-            //même chose pour le bouton Appartements
-            apartmentsButton.addEventListener('click', () => {
-                activeFilter = 'appartements';
-                filterProjects();
-                allButton.classList.remove('active');
-                objectsButton.classList.remove('active');
-                apartmentsButton.classList.add('active');
-                hotelsRestaurantsButton.classList.remove('active');
-            });
-            
-            //même chose pour le bouton Hôtels & Restaurants
-            hotelsRestaurantsButton.addEventListener('click', () => {
-                activeFilter = 'hotels-restaurants';
-                filterProjects();
-                allButton.classList.remove('active');
-                objectsButton.classList.remove('active');
-                apartmentsButton.classList.remove('active');
-                hotelsRestaurantsButton.classList.add('active');
-            });*/
-            
-            
-           /* filterProjects(); // Affiche tous les éléments de la galerie au chargement de la page
-            allButton.classList.add('active');  // Choisi le bouton Tous comme actif au chargement de la page*/
         });
 });
