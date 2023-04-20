@@ -9,20 +9,22 @@
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap"
 		rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
 	<meta name="description" content="">
-	<link rel="stylesheet" href="./assets/style.css">
-	<script src="https://kit.fontawesome.com/2ca01e49a3.js" crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="assets\style.css">
+
 </head>
 
 <body>
-
 	<header>
-		<h1>Sophie Bluel <span>Architecte d'inteérieur</span></h1>
+		<a href="./index.html">
+			<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
+		</a>
 		<nav>
 			<ul>
-				<li>projets</li>
-				<li>contact</li>
-				<li><a href="http://127.0.0.1:5500/login.html"></a>login</li>
+				<li><a href="index.html#portfolio">projets</a></li>
+				<li><a href="index.html#contact">contact</a></li>
+				<li><a href="login.html"> login</a></li>
 				<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
 			</ul>
 		</nav>
@@ -43,24 +45,11 @@
 					décorateur(trice)</p>
 			</article>
 		</section>
+
 		<section id="portfolio">
-			<h2>Mes Projets <button class="modalButton modalTrigger"><i class="fas fa-pen-to-square"></i>Modifier</button>					
-			</h2>
-			<div class="filter-buttons">
-			</div>
-			<div class="gallery">
-			</div>
+			<h2>Mes Projets</h2>
+			<div class="gallery"></div>
 		</section>
-
-		<div class="modalContainer">
-			<div class="overlay modalTrigger"></div>
-			<div class="modal">
-				<button class="closeModal modalTrigger">X</button>				
-				<h1>Galerie Photo</h1>					
-			</div>
-		</div>
-
-
 		<section id="contact">
 			<h2>Contact</h2>
 			<p>Vous avez un projet ? Discutons-en !</p>
@@ -76,14 +65,18 @@
 		</section>
 	</main>
 
-	<footer>
+	<footer id="footer">
 		<nav>
 			<ul>
-				<li>Mentions Légales</li>
+				<li><a href="#"> Mentions Légales</a></li>
 			</ul>
 		</nav>
 	</footer>
-	<script src="index.js" src="modale.js"></script>
+
 </body>
+<script src="JS/Fonctions/general.js"></script>
+<script src="JS/Fonctions/modal.js"></script>
+<script src="JS/Fonctions/user.js"></script>
+<script src="JS\index.js"></script>
 
 </html>
