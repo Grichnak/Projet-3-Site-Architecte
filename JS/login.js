@@ -11,28 +11,26 @@ const logUser = {
   password: "",
 };
 
-// Evenement au Submit
+// event relatif au submit
 form.addEventListener("submit", (e) => {
   e.preventDefault();
   e.stopPropagation();
   loginUser();
 });
 
-// Evenement au Mai
+// event au mail
 inputEmail.addEventListener("input", (e) => {
-  //inputEmail.setCustomValidity("nooooooo");
   inputEmail.reportValidity();
   logUser.email = e.target.value;
 });
 
-// Evenement au Password
+// event mdp
 inputPassword.addEventListener("input", (e) => {
-  //inputEmail.setCustomValidity("nooooooo");
   inputPassword.reportValidity();
   logUser.password = e.target.value;
 });
 
-//Evenement au chargement du DOM
+// event au chargement du DOM
 document.addEventListener("DOMContentLoaded", (e) => {
   e.preventDefault();
   logUser.email = inputEmail.value;
@@ -40,6 +38,6 @@ document.addEventListener("DOMContentLoaded", (e) => {
   console.log(logUser);
 });
 
-// Fetch la route user
+
 
 
