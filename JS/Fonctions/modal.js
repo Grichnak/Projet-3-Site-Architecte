@@ -17,7 +17,7 @@ const functionDeleteWorksApi = () => { // on supprime les images
         },
       });
       if (response.ok) {
-        console.log(`Image avec ID ${id} supprimée`);
+        alert(`Image supprimée`);
       } else {
         throw new Error(response.statusText);
       }
@@ -64,17 +64,7 @@ function hydrateModal() { // pour ouvrir la modal
     container.appendChild(p);
     container.appendChild(iconDelete);
 
-    // Ajouter l'icône de déplacement uniquement sur le premier élément
-    if (index === 0) {
-      const iconMove = document.createElement("i");
-      iconMove.id = "moveIcon";
-      iconMove.classList.add(
-        "fa-solid",
-        "fa-arrows-up-down-left-right",
-        "iconModal"
-      );
-      container.appendChild(iconMove);
-    }
+    
 
     //Icône Corbeille
     iconDelete.addEventListener("click", async (e) => {

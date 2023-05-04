@@ -43,11 +43,9 @@ function checkToken() {// On fait une fonction qui vérifie la présence d'un to
 
   const token = localStorage.getItem("token");
   if (token) {
-    console.log("Token en mémoire! => Mode ADMIN activé ;)");
+    //console.log("Token en mémoire! => Mode ADMIN activé ;)");
     adminEdition(); // Si un token est présent, on passe en mode édition
-  } else {
-    console.log("Pas de token en mémoire! ;(");
-  }
+  } 
 }
 
 function removeToken() {// Suppression du token lors de la fermeture de l'onglet ou de la redirection vers un autre site
@@ -128,7 +126,7 @@ const adminHTML = () => {   //Autre fonctions du mode admin
   titleProject.appendChild(spanTitleProject);
   article.appendChild(spanArticle);
 
-  
+
 
   //Login devient Logout   
   const logout = document.querySelector(
