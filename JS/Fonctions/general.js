@@ -9,9 +9,9 @@ async function fetchApiWorks() {// Déclaration d'une fonction asynchrone "fetch
     filtersBtn(btnTitle);// Appel de la fonction "filtersBtn" pour créer et afficher les boutons de filtre dans l'interface utilisateur    
     workDisplay(cards);// Appel de la fonction "workDisplay" pour afficher les cartes de projet dans l'interface utilisateur
   } catch (error) {
-    console.log(  // Gestion des erreurs potentielles lors de la récupération des données de l'API
-      `Erreur chargement Fonction fetchApiWorks Cartes des Projets:  ${error}`
-    );
+    //console.log(  // Gestion des erreurs potentielles lors de la récupération des données de l'API
+   //   `Erreur chargement Fonction fetchApiWorks Cartes des Projets:  ${error}`
+  //  );
   }
 }
 
@@ -24,9 +24,9 @@ async function fetchApiCategories() {// On déclare "fetchApiCategories" qui ré
       .then((data) => (categories = data));
 
   } catch (error) {
-    console.log(    // Gestion des erreurs potentielles lors de la récupération des données de l'API
-      `Erreur chargement Fonction fetchApiWorks Cartes des Projets:  ${error}`
-    );
+   // console.log(    // Gestion des erreurs potentielles lors de la récupération des données de l'API
+    //  `Erreur chargement Fonction fetchApiWorks Cartes des Projets:  ${error}`
+   // );
   }
 }
 
@@ -60,7 +60,7 @@ function filtersBtn(btnTitle) {  // Définition d'une fonction "filtersBtn" qui 
   buttons.forEach((btn) => {
     btn.addEventListener("click", (e) => {
       categoryIdValue = e.target.textContent; // Stockage du nom de la catégorie sélectionnée
-      console.log(categoryIdValue); // Affichage du nom de la catégorie sélectionnée dans la console
+      //console.log(categoryIdValue); // Affichage du nom de la catégorie sélectionnée dans la console
       buttons.forEach((btn) => {
         btn.classList.remove("active"); // Suppression de la classe "active" de tous les boutons de filtre
       });

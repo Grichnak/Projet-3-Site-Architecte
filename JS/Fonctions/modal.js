@@ -72,7 +72,7 @@ function hydrateModal() { // pour ouvrir la modal
       const cardDelete = e.target.parentNode.getAttribute("data-card-id");
       removeElement(cardDelete);
       deletedImages[cardDelete] = true;
-      console.log(deletedImages);
+      //console.log(deletedImages);
 
       // Convertir l'objet en chaîne de caractères JSON
       const deletedImagesJSON = JSON.stringify(deletedImages);
@@ -248,7 +248,7 @@ function editModal() { // Récupération des différents éléments du DOM
           return response.json();
         })
         .then((data) => {
-          console.log("Ta requête POST est passé :) :", data);
+          //console.log("Ta requête POST est passé :) :", data);
           fetchApiWorks();
           workDisplay();
           closeModal();
@@ -257,10 +257,10 @@ function editModal() { // Récupération des différents éléments du DOM
         })
         .catch((error) => {
           console.error("Error:", error);
-          console.log("Ta requête POST n'est PAS passée :( ");
+          //console.log("Ta requête POST n'est PAS passée :( ");
         });
     } else {
-      console.log("Formulaire invalide !!!");
+      //console.log("Formulaire invalide !!!");
     }
   });
 }
@@ -315,7 +315,7 @@ const addPicture = () => { // on ajoute des images
 
   if (file.size > maxSize) {
     errorImg.textContent = "Votre image est trop volumineuse";
-    console.log("fichier > 4MO!");
+    //console.log("fichier > 4MO!");
     return;
   }
 

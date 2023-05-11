@@ -27,7 +27,7 @@ async function loginUser() {
       inputPassword.style.color = "#1d6154";
       passwordError.textContent = "";
       loginError.textContent = "";
-      console.log("LogAdmin OK");
+      //console.log("LogAdmin OK");
       console.log(logUser);
       // stockage du token dans le stockage local
       localStorage.setItem("token", data.token);
@@ -116,7 +116,7 @@ const adminHTML = () => {   //Autre fonctions du mode admin
   spanTitleProject.classList.remove("projectRemove");
   spanTitleProject.setAttribute("id", "titleProjectRemove");
 
-  //Span "mode édition article"
+  //Span "mode édition" Article
   const spanArticle = spanFlagEditor.cloneNode(true);
   spanArticle.classList.remove("projectRemove");
   spanArticle.classList.add("articleRemove");
