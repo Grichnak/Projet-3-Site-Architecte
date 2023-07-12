@@ -1,33 +1,12 @@
 //Fetch de la route Works
 async function fetchApiWorks() {// Déclaration d'une fonction asynchrone "fetchApiWorks" qui récupère les données de l'API "works"
-  try {
-    await fetch(api + "works")// Récupération des données de l'API "works" à l'aide de l'URL stockée dans la constante "api"
-      .then((res) => res.json())
-      .then((data) => (cards = data));
-
-    const btnTitle = getButtonTitles(cards);// Appel de la fonction "getButtonTitles" pour extraire les titres des boutons de filtre à partir des données récupérées
-    filtersBtn(btnTitle);// Appel de la fonction "filtersBtn" pour créer et afficher les boutons de filtre dans l'interface utilisateur    
-    workDisplay(cards);// Appel de la fonction "workDisplay" pour afficher les cartes de projet dans l'interface utilisateur
-  } catch (error) {
-    //console.log(  // Gestion des erreurs potentielles lors de la récupération des données de l'API
-   //   `Erreur chargement Fonction fetchApiWorks Cartes des Projets:  ${error}`
-  //  );
-  }
+ return fetch(api + "works").then((res) => res.json())
 }
 
 
 //Fetch de la route Categories
 async function fetchApiCategories() {// On déclare "fetchApiCategories" qui récupère les données de l'API "categories"
-  try {
-    await fetch(api + "categories")    // Récupération des données de l'API "categories" à l'aide de l'URL stockée dans la constante "api"
-      .then((res) => res.json())
-      .then((data) => (categories = data));
-
-  } catch (error) {
-   // console.log(    // Gestion des erreurs potentielles lors de la récupération des données de l'API
-    //  `Erreur chargement Fonction fetchApiWorks Cartes des Projets:  ${error}`
-   // );
-  }
+  return await fetch(api + "categories") .then((res) => res.json())
 }
 
 function getButtonTitles(cards) {   //Récupération de tous les noms des catégories appellées dans le fetch dans un tableau unique
@@ -37,7 +16,7 @@ function getButtonTitles(cards) {   //Récupération de tous les noms des catég
 
 
 //On crée et on injecte un bouton en html
-function filtersBtn(btnTitle) {  // Définition d'une fonction "filtersBtn" qui crée les boutons de filtre
+function filtersBtn(btnTitle, cards) {  // Définition d'une fonction "filtersBtn" qui crée les boutons de filtre
   const allButton = document.createElement("button");  // Création d'un bouton "Tous"
 
   allButton.classList.add("btn", "active"); // Ajout des classes "btn" et "active" au bouton "Tous"
@@ -65,7 +44,8 @@ function filtersBtn(btnTitle) {  // Définition d'une fonction "filtersBtn" qui 
         btn.classList.remove("active"); // Suppression de la classe "active" de tous les boutons de filtre
       });
       e.target.classList.add("active"); // Ajout de la classe "active" au bouton de filtre sélectionné
-      workDisplay(); // Appel de la fonction "workDisplay" pour afficher les projets correspondants à la catégorie sélectionnée
+
+      workDisplay(cards); // Appel de la fonction "workDisplay" pour afficher les projets correspondants à la catégorie sélectionnée
     });
   });
 }
@@ -96,10 +76,12 @@ function cardsTemplate(card) {// Création des cartes de travail pour els photos
 
 
 
-function workDisplay() { //On va injecter des cartes dans le html et les montrer
+function workDisplay(cards) { //On va injecter des cartes dans le html et les montrer
   const gallery = document.querySelector(".gallery");
   const cardDisplay = new Set(); // Utilisation de Set pour éviter les doublons de cartes
   gallery.innerHTML = ""; // On vide la galerie pour afficher uniquement les cartes qui correspondent aux filtres
+
+  console.log(cards);
 
   // Boucle à travers chaque carte
   cards.forEach((card) => {

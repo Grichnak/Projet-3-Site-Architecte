@@ -32,20 +32,11 @@ async function loginUser() {
       // stockage du token dans le stockage local
       localStorage.setItem("token", data.token);
       //Redirection index.html
-      window.location.href = "../index.html";
+      window.location.href = "../FrontEnd/index.html";
     }
   } catch (error) {
     console.log(error);
   }
-}
-
-function checkToken() {// On fait une fonction qui vérifie la présence d'un token dans le local storage
-
-  const token = localStorage.getItem("token");
-  if (token) {
-    //console.log("Token en mémoire! => Mode ADMIN activé ;)");
-    adminEdition(); // Si un token est présent, on passe en mode édition
-  } 
 }
 
 function removeToken() {// Suppression du token lors de la fermeture de l'onglet ou de la redirection vers un autre site
@@ -54,26 +45,8 @@ function removeToken() {// Suppression du token lors de la fermeture de l'onglet
   sessionStorage.removeItem("deletedImages");
 }
 
-function adminEdition() {// Fonction qui permet de passer en mode édition
 
-  adminHTML(); // Affichage du formulaire de connexion à l'espace éditeur
 
-  // Événement de clic sur le bouton pour supprimer un projet
-  const modalJs = document.getElementById("titleProjectRemove");
-  modalJs.addEventListener("click", (e) => {
-    e.preventDefault();
-    openModal(); // Ouverture de la modal
-    hydrateModal();
-    editModal(); // Édition de la modal
-  });
-
-  // Événement de clic sur le bouton pour supprimer les projets de l'API
-  const deleteWorksApi = document.querySelector("body > div > button");
-  deleteWorksApi.addEventListener("click", (e) => {
-    e.preventDefault();
-    functionDeleteWorksApi(); // Fonction pour confirmer la suppression des projets
-  });
-}
 const adminHTML = () => {   //Autre fonctions du mode admin
 
   //Créer le bandeau Admin Editor

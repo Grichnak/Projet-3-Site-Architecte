@@ -1,35 +1,11 @@
-const functionDeleteWorksApi = () => { // on supprime les images 
-  // Récupérer la chaîne de sessionStorage
-  const deletedImagesJSON = sessionStorage.getItem("deletedImages");
-  // Convertir la chaîne en objet JavaScript
-  const deletedImages = JSON.parse(deletedImagesJSON);
-  // Supprimer chaque image du SESSION STORAGE
-  //méthode JavaScript qui renvoie un tableau contenant les clés d'un objet
-  Object.keys(deletedImages).forEach(async (id) => {
-    try {
-      if (token === false) return console.log({ error: "Pas connecté" });
 
-      const response = await fetch(`${api}works/${id}`, {
-        method: "DELETE",
-        headers: {
-          Accept: "*/*",
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      if (response.ok) {
-        alert(`Image supprimée`);
-      } else {
-        throw new Error(response.statusText);
-      }
-    } catch (e) {
-      console.error(
-        `Erreur lors de la suppression de l'image avec ID ${id}: ${e}`
-      );
-    }
-  });
-};
+const modalElement = document.getElementById("modal");
+const editSection = document.querySelector("#editSection");
+const gallerySection = document.querySelector("#modalEdit");
 
-function hydrateModal() { // pour ouvrir la modal
+
+
+function hydrateGalleryModal(cards) { // pour ouvrir la modal
   let deletedImages = {};
   //evite les doublettes images Gallery
   document.getElementById("modalGrid").innerHTML = "";
@@ -72,7 +48,7 @@ function hydrateModal() { // pour ouvrir la modal
       const cardDelete = e.target.parentNode.getAttribute("data-card-id");
       removeElement(cardDelete);
       deletedImages[cardDelete] = true;
-      //console.log(deletedImages);
+      
 
       // Convertir l'objet en chaîne de caractères JSON
       const deletedImagesJSON = JSON.stringify(deletedImages);
@@ -123,13 +99,11 @@ function hydrateModal() { // pour ouvrir la modal
 
 // Affichage de la Modal
 
-function editModal() { // Récupération des différents éléments du DOM
+function editModal(categories) { // Récupération des différents éléments du DOM
   const addProject = document.getElementById("editModal");
   const inputFile = document.getElementById("filetoUpload");
   const selectCategory = document.getElementById("category");
-  const editSection = document.querySelector("#editSection");
   const addToApi = document.getElementById("editWorks");
-  const gallerySection = document.querySelector("#modalEdit");
   const previewModal = document.querySelector("#previewModal");
   let iCanSubmit = false;
 
@@ -165,6 +139,8 @@ function editModal() { // Récupération des différents éléments du DOM
       selectCategory.appendChild(option);
     });
   }
+
+
 
   // Condition Formulaire POST
 
@@ -211,7 +187,7 @@ function editModal() { // Récupération des différents éléments du DOM
     }
   });
 
-  addToApi.addEventListener("submit", (e) => {
+  addToApi.addEventListener("submit", async (e) => {
     e.preventDefault();
     //Récupérer les valeurs input
     if (iCanSubmit) {
@@ -247,20 +223,26 @@ function editModal() { // Récupération des différents éléments du DOM
           }
           return response.json();
         })
-        .then((data) => {
-          //console.log("Ta requête POST est passé :) :", data);
-          fetchApiWorks();
-          workDisplay();
-          closeModal();
+        .then(async (abc) => {
+          
+          const data = await fetchApiWorks()
+          
+          console.log('data', data)
+
+          workDisplay(data);
+          hydrateGalleryModal(data);
+          gallerySection.style.display = "";
+          editSection.style.display = "none";
           // réinitialiser le champ inputFile sinon il envoie plusieur formData en post
           inputFile.value = "";
+          document.querySelector("#title").value = ""
+          document.querySelector("#category").value = 0
+          document.getElementById("filetoUpload").reset()
         })
         .catch((error) => {
           console.error("Error:", error);
-          //console.log("Ta requête POST n'est PAS passée :( ");
+          
         });
-    } else {
-      //console.log("Formulaire invalide !!!");
     }
   });
 }
@@ -268,7 +250,6 @@ function editModal() { // Récupération des différents éléments du DOM
 
 //Modal dans html
 
-const modalElement = document.getElementById("modal");
 
 function openModal() {
   modalElement.style.display = "flex";
@@ -315,7 +296,7 @@ const addPicture = () => { // on ajoute des images
 
   if (file.size > maxSize) {
     errorImg.textContent = "Votre image est trop volumineuse";
-    //console.log("fichier > 4MO!");
+    
     return;
   }
 

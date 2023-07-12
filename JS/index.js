@@ -12,13 +12,69 @@ const imageUrls = [];// Déclaration d'un tableau vide pour stocker les URLs d'i
 
 // On a plusieurs routes: /works /categories /users/login /works/{id}
 
-window.addEventListener("load", (e) => {// Chargement de la page, appel des fonctions pour récupérer les cartes des projets et les catégories de projets
+window.addEventListener("load", async (e) => {// Chargement de la page, appel des fonctions pour récupérer les cartes des projets et les catégories de projets
 
-  fetchApiWorks();
-  fetchApiCategories();
+  const cards = await fetchApiWorks()// Déclaration d'une fonction asynchrone "fetchApiWorks" qui récupère les données de l'API "works"
+
+  const categories = await fetchApiCategories();
+  console.log(categories)
   categoryIdValue = "Tous"; // Initialisation de la valeur de la catégorie sélectionnée
-  checkToken(); // Vérification si un token est présent pour passer en mode édition
+
+  const btnTitle = getButtonTitles(cards);// Appel de la fonction "getButtonTitles" pour extraire les titres des boutons de filtre à partir des données récupérées
+  filtersBtn(btnTitle, cards);// Appel de la fonction "filtersBtn" pour créer et afficher les boutons de filtre dans l'interface utilisateur    
+  workDisplay(cards);// Appel de la fonction "workDisplay" pour afficher les cartes de projet dans l'interface utilisateur
+  
+  if (localStorage.getItem("token"))
+  {
+      
+      adminHTML(); // Affichage du formulaire de connexion à l'espace éditeur
+
+      // Événement de clic sur le bouton pour supprimer un projet
+      const modalJs = document.getElementById("titleProjectRemove");
+      modalJs.addEventListener("click", (e) => {
+        e.preventDefault();
+        openModal(); // Ouverture de la modal
+        hydrateGalleryModal(cards);
+        editModal(categories); // Édition de la modal
+      });
+
+      // Événement de clic sur le bouton pour supprimer les projets de l'API
+      const deleteWorksApi = document.querySelector("body > div > button");
+      deleteWorksApi.addEventListener("click", (e) => {
+        e.preventDefault();
+        // Récupérer la chaîne de sessionStorage
+        const deletedImagesJSON = sessionStorage.getItem("deletedImages");
+        // Convertir la chaîne en objet JavaScript
+        const deletedImages = JSON.parse(deletedImagesJSON);
+        // Supprimer chaque image du SESSION STORAGE
+        // méthode JavaScript qui renvoie un tableau contenant les clés d'un objet
+        Object.keys(deletedImages).forEach(async (id) => {
+          if (token === false)
+          {
+            return alert("Pas connecté");
+          }
+
+          const response = await fetch(`${api}works/${id}`, {
+              method: "DELETE",
+              headers: {
+                Accept: "*/*",
+                Authorization: `Bearer ${token}`,
+              },
+            });
+            
+            if (response.ok) {
+              const cards = await fetchApiWorks()// Déclaration d'une fonction asynchrone "fetchApiWorks" qui récupère les données de l'API "works"
+              workDisplay(cards);
+            }
+        });
+      });
+    } 
 });
+
+function deleteImage()
+{
+  
+}
 
 
 
